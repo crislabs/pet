@@ -6,7 +6,7 @@ import { petGetSiteByAdmin } from './lib/site/getSite'
 export default withAuth(
   async function middleware(req) {
     // if (req.nextUrl.pathname.startsWith('/admin')) {
-    //   // const site = await petGetSiteByAdmin(process.env.SITE_URL as string)
+    //   // const site = await petGetSiteByAdmin(process.env.NEXT_PUBLIC_SITE_URL as string)
     //   // console.log('site', site)
     //   console.log('middleware');
       

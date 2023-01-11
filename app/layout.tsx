@@ -11,7 +11,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const site = use(petGetSiteStoreNavigation(process.env.SITE_URL as string));
+  const site = use(petGetSiteStoreNavigation(process.env.NEXT_PUBLIC_SITE_URL as string));
 
   return (
     <html>

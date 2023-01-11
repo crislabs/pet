@@ -2,7 +2,7 @@
 import { petCreateAdoption } from "@/lib/product/adoptions/createAdoption";
 import { useUI } from "@/src/providers/UIContext";
 import { CreateProduct, Product } from "@/src/interfaces/product";
-import { getQuery, SwalMessage } from "@/src/utils";
+import { getQuery, SwalMessage, SwalMessageSiteCreateError } from "@/src/utils";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -49,8 +49,9 @@ export function FormAdoption(props: Props) {
       await SwalMessage('Adoption Created ');
       toggle();
     },
-    onError:  (err) => {
-      console.log('err', err)
+    onError:  (err: Error) => {
+      SwalMessageSiteCreateError(err.response.errors[0].message);
+
     },
   });
   

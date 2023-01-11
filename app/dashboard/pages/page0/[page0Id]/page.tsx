@@ -24,12 +24,12 @@ export default function Page0(props: Props) {
   if (page.dataPage.type === 'adoption') {
     adoptions = use(petGetAdoptionsByParentId(params.page0Id))
   }
-  if (page.dataPage.type === 'blog') {
-    articles = use(petGetArticlesByParentId(params.page0Id))
-  }
-  if (page.dataPage.type === 'category') {
-    pages = use(petGetPage1ByParentId(params.page0Id))
-  }
+  // if (page.dataPage.type === 'blog') {
+  //   articles = use(petGetArticlesByParentId(params.page0Id))
+  // }
+  // if (page.dataPage.type === 'category') {
+  //   pages = use(petGetPage1ByParentId(params.page0Id))
+  // }
 
   return (
     <PaginationProvider>

@@ -1,4 +1,4 @@
-import { Product } from "@/src/interface/product.interface";
+import { Product } from "@/src/interfaces/product";
 
 
 export async function petGetAdoptionsByParentId(parentId: string): Promise<Product[]> {

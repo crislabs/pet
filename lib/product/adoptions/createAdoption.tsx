@@ -1,7 +1,9 @@
+import { graphQLClient } from "@/lib/graphqlClient";
 import { CreateProduct, Product } from "@/src/interfaces/product";
+import { gql } from "graphql-request";
 
 
-export async function petCreateAdoption(input: CreateProduct): Promise<Product> {
+export async function petCreateAdoptiongq(input: CreateProduct): Promise<Product> {
   return await fetch(`${process.env.NEXT_PUBLIC_API_BACKEND_URL}/graphql`, {
     method: 'POST',
     headers: {
@@ -31,4 +33,30 @@ export async function petCreateAdoption(input: CreateProduct): Promise<Product> 
     .then(res => res.json())
     .then((res) => res.data)
     .then((result) => result.petCreateAdoption)
+}
+
+export async function petCreateAdoption(
+  input: CreateProduct,
+): Promise<Product> {
+  const data = await graphQLClient.request(gql`
+  mutation PetCreateAdoption($input: CreateProduct!) {
+        petCreateAdoption(input: $input) {
+          _id
+          slug
+          parentId
+          dataProduct{
+            seoProduct{
+              title
+              image{
+                src
+              }
+            }
+          }
+        }
+      }
+`, {
+    input,
+  });
+  return data.petCreateAdoption;
+  
 }

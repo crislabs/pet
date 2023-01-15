@@ -91,9 +91,12 @@ export async function petGetSiteStoreNavigation(id: string):Promise<Site> {
         petGetSite(id: $id) {
           _id
           dataSite {
-            name
+            title
             description
-            type
+            type{
+              label
+              slug
+            }
             imageSite {
               icon {
                 src
@@ -108,10 +111,11 @@ export async function petGetSiteStoreNavigation(id: string):Promise<Site> {
           pages{
             _id
             dataPage{
-              type
-              seoPage{
-                title
+              type{
+                label
+                slug
               }
+              title
             }
             slug
             

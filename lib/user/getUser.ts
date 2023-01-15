@@ -17,9 +17,7 @@ export async function petGetUserByEmail(email: string, siteId: string):Promise<U
         dataUser{
           username
           role
-          image{
-            src
-          }
+          picture
         }
         email
         }
@@ -39,9 +37,9 @@ export const oAUthToDbUser = async( oAuthemail: string, oAuthusername: string, o
     const user = await petGetUserByEmail(oAuthemail, process.env.NEXT_PUBLIC_SITE_URL as string)
     if ( user ) {
         const { _id, dataUser, email } = user;
-        const { username, role, image } = dataUser
-        const { src } = image
-        return { sid: _id, username, email, role, image: src };
+        const { username, role, picture } = dataUser
+        
+        return { sid: _id, username, email, role, picture };
     } 
   } catch (error) {
     console.log(error);
@@ -50,7 +48,7 @@ export const oAUthToDbUser = async( oAuthemail: string, oAuthusername: string, o
     const newUser = await petCreateUser({ username: oAuthusername, email: oAuthemail, password: '@@@@@@', role: 'USER_ROL', image: oAuthimage, siteId: process.env.NEXT_PUBLIC_SITE_URL as string, oAuth: oAuthprovider})  
     // graphQLClient.request(CREATE_USER, { input: { email: oAuthEmail.toLowerCase(), username: oAuthUserName.toLowerCase(), password: '@@@@@@', role: 'USER_ROL', image: oAuthPicture, site: '1234567', oAuth: aAuthProvider } })
       const { _id, dataUser, email } = newUser;
-      const { username, role, image } = dataUser;
-      const { src } = image
-    return { sid:_id, username, email, role, image: src };
+      const { username, role, picture } = dataUser;
+      
+    return { sid:_id, username, email, role, picture };
 }

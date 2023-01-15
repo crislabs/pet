@@ -83,7 +83,7 @@ export function Header(props: Props) {
             <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12">
               {site.pages
                 ?.filter((data) =>
-                  ['contact', 'blog', 'adoption'].includes(data.dataPage.type),
+                  ['contact', 'blog', 'adoption'].includes(data.dataPage.type.slug),
                 )
                 .map((data, i) => (
                   <Link
@@ -91,7 +91,7 @@ export function Header(props: Props) {
                     href={`/${data.slug}`}
                     className="font-semibold text-gray-900 hover:text-gray-900"
                   >
-                    {data.dataPage.seoPage.title}
+                    {data.dataPage.title}
                   </Link>
                 ))}
             </div>
@@ -150,7 +150,7 @@ export function Header(props: Props) {
                     {site.pages
                       ?.filter((data) =>
                         ['contact', 'blog', 'adoption'].includes(
-                          data.dataPage.type,
+                          data.dataPage.type.slug,
                         ),
                       )
                       .map((data, i) => (
@@ -159,7 +159,7 @@ export function Header(props: Props) {
                           href={`/${data.slug}`}
                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                         >
-                          {data.dataPage.seoPage.title}
+                          {data.dataPage.title}
                         </Link>
                       ))}
                   </div>

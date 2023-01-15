@@ -74,10 +74,10 @@ export function FormPage(props: Props) {
     error,
   } = useMutation({
     mutationFn: async (input: CreatePage) =>
-      await petCreatePage0gq(input),
+      await petCreatePage0(input),
 
     onSuccess: async (data) => {
-      console.log('data', data);
+      // console.log('data', data);
       queryClient.setQueryData<Page[]>(
         ['pet-get-pages0', data.parentId],
         (old) => [...(old as Page[]), data],
@@ -223,9 +223,9 @@ export function FormPage(props: Props) {
     mode: 'onChange',
     defaultValues: page
       ? {
-          title: page?.dataPage.seoPage.title,
-          description: page?.dataPage.seoPage.description,
-          type: page?.dataPage.type,
+          title: page?.dataPage.title,
+          description: page?.dataPage.description,
+          type: page?.dataPage.type.slug,
         }
       : { title: '', description: 'page description', type: 'page' },
   });
@@ -483,7 +483,7 @@ export function FormPage(props: Props) {
                       <div className="col-span-6 space-y-2">
                         <label className="label-form">Image for SEO</label>
 
-                        { page.dataPage.seoPage.image &&
+                        { page.dataPage.thumbnailUrl &&
                           <div className="flex items-center relative">
                             <button
                               type="button"
@@ -505,7 +505,7 @@ export function FormPage(props: Props) {
                               <img
                                 // src={getValues('imageSrc')}
                                 src={
-                                  page?.dataPage.seoPage.image?.src ||
+                                  page?.dataPage.thumbnailUrl ||
                                   'https://res.cloudinary.com/dqsbh2kn0/image/upload/v1663014890/zawkgpyjvvxrfwp9j7w1.jpg'
                                 }
                                 alt="image"
@@ -516,7 +516,7 @@ export function FormPage(props: Props) {
                         }
 
 {
-  !page.dataPage.seoPage.image?.src &&
+  !page.dataPage.thumbnailUrl &&
                         <div className="flex flex-col justify-center rounded-md border-2 border-dashed border-gray-300 p-2">
                           <div className="space-y-1 text-center">
                             <svg

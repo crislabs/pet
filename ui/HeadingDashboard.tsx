@@ -16,6 +16,7 @@ import { SlideOversCart } from './SlideOversCart';
 import { FormPage } from './FormPage';
 import { useSearchParams } from 'next/navigation';
 import { FormAdoption } from './FormAdoption';
+import { Adoption } from '@/src/interfaces/adoption';
 // import { FormProduct } from './FormProduct';
 // import { FormDetails } from './FormDetails';
 // import { FormSpecs } from './FormSpecs';
@@ -28,10 +29,11 @@ interface Props {
   article?: Article;
   site?: Site;
   product?: Product;
+  adoption?: Adoption;
 }
 
 export function HeadingDashboard(props: Props) {
-  const { page, site, article, product, title } = props;
+  const { page, site, article, product, title, adoption } = props;
   const query = getQuery();
   const searchParams = useSearchParams();
   // console.log('query', query)
@@ -44,6 +46,9 @@ export function HeadingDashboard(props: Props) {
     console.log('Click Edit');
     toggle();
     if (query.length === 4) setChildrens(<FormPage page={page} />);
+    if (query.length === 3 && searchParams.get('type') === 'adoption') {
+      setChildrens(<FormAdoption adoption={adoption} />);
+    }
     // if (query.length === 3 && query[1] === 'products') setChildrens(<FormProduct product={product} />);
     // if (query.length === 3 && query[1] === 'articles') setChildrens(<FormArticle article={article} />);
   }
@@ -113,7 +118,7 @@ export function HeadingDashboard(props: Props) {
                 {query.length === 4 && searchParams.get('type') === 'blog' && 'Add Article'}
                 {query.length === 4 && searchParams.get('type') === 'category' && 'Add Category'}
                 {query.length === 4 && searchParams.get('type') === 'pet' && 'Add Product'}
-
+                {query.length === 3 && searchParams.get('type') === 'adoption' && 'Add Info'}
               </p>
             </button>
           </span>
@@ -122,7 +127,6 @@ export function HeadingDashboard(props: Props) {
             query[1] === 'products' &&
           <span className="block space-x-3">
             <button className="btn-primary space-x-3"
-              // onClick={() => handleClickUpdateDetails()}
             >
               <FolderPlusIcon className="h-6 w-6" aria-hidden="true" />
               <p className="hidden sm:block">

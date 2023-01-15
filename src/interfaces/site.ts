@@ -10,11 +10,11 @@ export interface Site {
 }
 
 interface DataSite {
-  name: string;
+  title: string;
   description: string;
   dbSite: DataBase[]
   adminSite: AdminSite[]
-  type: string
+  type: Type
   infoSite: {
     clientId: string
     numberPhone?: number;
@@ -108,6 +108,10 @@ export interface SiteForm {
 //   imageSrc: string;
 //   imageAlt: string;
 // }
+export interface Type {
+  label: string;
+  slug: string;
+}
 export interface Domain {
   name: string;
   dlt: string;

@@ -1,5 +1,5 @@
 import { graphQLClient } from "@/lib/graphqlClient";
-import { Adoption, CreateAdoption } from "@/src/interfaces/adoption";
+import { Adoption, CreateAdoption, UpdateAdoption } from "@/src/interfaces/adoption";
 import { CreateProduct, Product } from "@/src/interfaces/product";
 import { gql } from "graphql-request";
 
@@ -36,29 +36,33 @@ import { gql } from "graphql-request";
 //     .then((result) => result.petCreateAdoption)
 // }
 
-export async function petCreateAdoption(
-  input: CreateAdoption,
+export async function petUpdateAdoption(
+  input: UpdateAdoption,
 ): Promise<Adoption> {
   const data = await graphQLClient.request(gql`
-  mutation PetCreateAdoption($input: CreateAdoption!) {
-        petCreateAdoption(input: $input) {
+  mutation PetUpdateAdoption($input: UpdateAdoption!) {
+        petUpdateAdoption(input: $input) {
           _id
           slug
           parentId
           dataAdoption{
             type{
+              label
               slug
+            }
+            images{
+              src
+              alt
             }
             title
             description
             thumbnailUrl
-            
           }
         }
       }
 `, {
     input,
   });
-  return data.petCreateAdoption;
+  return data.petUpdateAdoption;
   
 }

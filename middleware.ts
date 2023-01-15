@@ -20,7 +20,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({req, token }) => ['63b0d0a47a5228bde1bcf133', '63b2adf8328b13dc231f1df4'].includes(token?.sid as string),
+      authorized: ({req, token }) => ['63c31d1fba77e84fce84bd84', '63b2adf8328b13dc231f1df4'].includes(token?.sid as string),
       // authorized: ({req, token }) => req.cookies.get('garritas')!.value.split(',').includes(token?.sub!),
     },
   }

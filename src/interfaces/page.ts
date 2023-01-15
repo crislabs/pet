@@ -3,7 +3,7 @@
 // import { Food } from "./product/food.interface";
 import { Pet } from "./pet";
 import { Product } from "./product";
-import { Image, Seo } from "./site";
+import { Image, Seo, Type } from "./site";
 
 export interface Page {
   _id: string;
@@ -11,7 +11,6 @@ export interface Page {
   slug: string;
   parentId: string;
   // articles: Article[];
-  siteId: string
   pages?: Page[];
   products?: Product[]
   adoptions?: Product[]
@@ -19,9 +18,12 @@ export interface Page {
 }
 
 interface DataPage {
-  type: string
-  icon?: Image;
-  seoPage: Seo;
+  type: Type
+  title: string
+  description: string
+  thumbnailUrl: string
+  siteId: string
+  icon: string;
 }
 
 export interface CreatePage {

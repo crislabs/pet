@@ -8,20 +8,21 @@ import { Page } from '@/src/interfaces/page';
 import { Product } from '@/src/interfaces/product';
 import { PetGridAdoptions } from '@/ui/GridAdoption';
 import React, { use } from 'react'
+import { Adoption } from '@/src/interfaces/adoption';
 
 interface Props {
   searchParams?: { [key: string]: string | string[] | undefined };
   params: { page0Id: string }
 }
 
-let adoptions: Product[] = []
+let adoptions: Adoption[] = []
 let articles: Article[] = []
 let pages: Page[] = []
 
 export default function Page0(props: Props) {
   const { searchParams, params } = props
   const page = use(petGetPage0(params.page0Id))
-  if (page.dataPage.type === 'adoption') {
+  if (page.dataPage.type.slug === 'adoption') {
     adoptions = use(petGetAdoptionsByParentId(params.page0Id))
   }
   // if (page.dataPage.type === 'blog') {
@@ -34,7 +35,7 @@ export default function Page0(props: Props) {
   return (
     <PaginationProvider>
       {
-        page.dataPage.type === 'adoption' && 
+        page.dataPage.type.slug === 'adoption' && 
         <PetGridAdoptions adoptions={adoptions} page={page} parentId={params.page0Id}  />
       }
       {/* {

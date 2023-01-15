@@ -2,6 +2,10 @@ import { petGetSiteStoreNavigation } from '@/lib/site/getSite';
 import { ReactQueryProvider } from '@/src/providers/ReactQueryContext';
 import { SessionAuthProvider } from '@/src/providers/SessionContext';
 import { UIProvider } from '@/src/providers/UIContext';
+import 'swiper/css/bundle';
+import 'swiper/swiper.min.css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import '@/styles/globals.css';
 import { Header } from '@/ui/Header';
 import React, { use } from 'react';
@@ -12,6 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const site = use(petGetSiteStoreNavigation(process.env.NEXT_PUBLIC_SITE_URL as string));
+  console.log('site', site)
 
   return (
     <html>

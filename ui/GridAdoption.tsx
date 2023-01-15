@@ -12,9 +12,10 @@ import { CardAdoption } from './CardAdoption';
 
 import { HeadingDashboard } from './HeadingDashboard';
 import { HeadingDashboardOption } from './HeadingDashboardOptions';
+import { Adoption } from '@/src/interfaces/adoption';
 
 interface Props {
-  adoptions: Product[]
+  adoptions: Adoption[]
   page: Page
   parentId: string
 }
@@ -36,7 +37,7 @@ export function PetGridAdoptions(props: Props) {
   // console.log('adoptions', adoptions)
   return (
     <SelectionProvider ids={products?.map(data => data._id)}>
-      <HeadingDashboard title={page0.dataPage.seoPage.title} page={page0} />
+      <HeadingDashboard title={page0.dataPage.title} page={page0} />
 
       <HeadingDashboardOption />
       <div className={'grid-sites'}>

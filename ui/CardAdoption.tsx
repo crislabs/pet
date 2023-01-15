@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { useSelection } from '@/src/providers/SelectionContext';
 import { getQuery } from '@/src/utils';
 import { Product } from '@/src/interfaces/product';
+import { Adoption } from '@/src/interfaces/adoption';
 
 
 interface Props {
-  adoption?: Product;
+  adoption?: Adoption;
 }
 export function CardAdoption({ adoption }: Props) {
   const { selected, toggle, isSelected } = useSelection();
@@ -31,19 +32,19 @@ export function CardAdoption({ adoption }: Props) {
         <img
           className="h-[12rem] w-full object-cover"
           src={
-            adoption?.dataProduct.seoProduct?.image?.src! ||
+            adoption?.dataAdoption.thumbnailUrl! ||
             'https://res.cloudinary.com/dqsbh2kn0/image/upload/v1663014890/zawkgpyjvvxrfwp9j7w1.jpg'
           }
           alt={
-            adoption?.dataProduct.seoProduct?.image?.alt! || 'image description'
+            adoption?.dataAdoption.description || 'image description'
           }
         />
         <Link
-          href={`/dashboard/adoptions/${adoption?._id}`}
+          href={`/dashboard/adoptions/${adoption?._id}?type=${adoption?.dataAdoption.type.slug}`}
           className="flex items-center h-[3rem] mx-2 cursor-pointer"
         >
           <h2 className=" text-sm tracking-wide truncate">
-            {adoption?.dataProduct.seoProduct.title}
+            {adoption?.dataAdoption.title}
           </h2>
         </Link>
       </div>

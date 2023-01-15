@@ -1,7 +1,8 @@
+import { Adoption } from "@/src/interfaces/adoption";
 import { Product } from "@/src/interfaces/product";
 
 
-export async function petGetAdoptionsByParentId(parentId: string): Promise<Product[]> {
+export async function petGetAdoptionsByParentId(parentId: string): Promise<Adoption[]> {
   return await fetch(`${process.env.NEXT_PUBLIC_API_BACKEND_URL}/graphql`, {
     method: 'POST',
     headers: {
@@ -14,13 +15,15 @@ export async function petGetAdoptionsByParentId(parentId: string): Promise<Produ
           _id
           slug
           parentId
-          dataProduct{
-            seoProduct{
-              title
-              image{
-                src
-              }
+          dataAdoption{
+            type{
+              label
+              slug
             }
+            title
+            description
+            thumbnailUrl
+            
           }
         }
       }

@@ -31,19 +31,19 @@ export function CardPage0({ page }: Props) {
         <img
           className="h-[12rem] w-full object-cover"
           src={
-            page?.dataPage.seoPage?.image?.src! ||
+            page?.dataPage.thumbnailUrl! ||
             'https://res.cloudinary.com/dqsbh2kn0/image/upload/v1663014890/zawkgpyjvvxrfwp9j7w1.jpg'
           }
           alt={
-            page?.dataPage.seoPage?.image?.alt! || 'image description'
+            page?.dataPage.description! || 'image description'
           }
         />
         <Link
-          href={`/dashboard/pages/page0/${page?._id}?type=${page?.dataPage.type}`}
+          href={`/dashboard/pages/page0/${page?._id}?type=${page?.dataPage.type.slug}`}
           className="flex items-center h-[3rem] mx-2 cursor-pointer"
         >
           <h2 className=" text-sm tracking-wide truncate">
-            {page?.dataPage.seoPage.title}
+            {page?.dataPage.title}
           </h2>
         </Link>
       </div>

@@ -13,15 +13,14 @@ export async function petGetPage0(id: string): Promise<Page> {
         petGetPage0(id: $id){
           _id
             dataPage{
-              type
-              seoPage{
-                title
-                description
-                image{
-                  src
-                  alt
-                }
+              type{
+                label
+                slug
               }
+              title
+              description
+              thumbnailUrl
+              
             }
           slug
           parentId

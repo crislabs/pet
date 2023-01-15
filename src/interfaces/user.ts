@@ -3,14 +3,14 @@ import { Image } from "./site"
 export interface User {
   _id: string
   email: string
-  password: string
   dataUser: DataUser
 }
 
 interface DataUser {
   username: string
+  password: string
   role: string
-  image: Image
+  picture: string
 }
 
 export interface CreateUser {

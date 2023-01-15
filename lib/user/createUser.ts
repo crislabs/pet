@@ -14,9 +14,7 @@ export async function petCreateUser(input: CreateUser):Promise<User> {
         dataUser{
           username
           role
-          image{
-            src
-          }
+          picture
         }
         email
       }

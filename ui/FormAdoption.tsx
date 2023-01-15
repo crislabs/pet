@@ -9,17 +9,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { Adoption, CreateAdoption, UpdateAdoption } from "@/src/interfaces/adoption";
+import { petUpdateAdoption } from "@/lib/product/adoptions/updateAdoption";
 
 interface Error {
   response: { errors: [{ message: string }] };
 }
 
 interface Props {
-  adoption?: Product
+  adoption?: Adoption
 }
 
 interface FormValues {
-  name: string;
+  title: string;
   description: string;
   type: string;
 }
@@ -40,11 +42,11 @@ export function FormAdoption(props: Props) {
   } = useUI();
   const queryClient = useQueryClient();
   const { mutate: createPetAdoption, isLoading, isError, error } = useMutation({
-    mutationFn: async (input: CreateProduct) =>
+    mutationFn: async (input: CreateAdoption) =>
       await petCreateAdoption(input),
     
     onSuccess: async (data) => {
-      queryClient.setQueryData<Product[]>(['pet-get-adoptions', data.parentId], (old) => [...old as Product[], data])
+      queryClient.setQueryData<Adoption[]>(['pet-get-adoptions', data.parentId], (old) => [...old as Adoption[], data])
       
       await SwalMessage('Adoption Created ');
       toggle();
@@ -52,6 +54,21 @@ export function FormAdoption(props: Props) {
     onError:  (err: Error) => {
       SwalMessageSiteCreateError(err.response.errors[0].message);
 
+    },
+  });
+
+  const { mutate: updatePetAdoption } = useMutation({
+    mutationFn: async (input: UpdateAdoption) => await petUpdateAdoption(input),
+
+    onSuccess: async (data) => {
+      queryClient.setQueryData<Adoption>(['pet-get-adoption', query[2]], data);
+      // queryClient.setQueryData<Page[]>(['pet-get-pages0', data.parentId], (old) => [...old as Page[], data])
+      await SwalMessage('Adoption Updated');
+      toggle();
+    },
+    onError: (err) => {
+      console.log('err', err);
+      // SwalMessageSiteCreateError(error.response.errors[0].message);
     },
   });
   
@@ -65,24 +82,30 @@ export function FormAdoption(props: Props) {
     mode: 'onChange',
     defaultValues: adoption
       ? {
-        name: adoption?.dataProduct.seoProduct.title,
-        description: adoption?.dataProduct.seoProduct.description,
+        title: adoption?.dataAdoption.title,
+        description: adoption?.dataAdoption.description,
         type: searchParams.get('type') as string,
       }
-      : { name: '', description: 'adoption description', type: searchParams.get('type') as string },
+      : { title: '', description: 'adoption description', type: searchParams.get('type') as string },
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const form = {
       ...data,
-      name: data.name.trim(),
+      title: data.title.trim(),
       description: data.description.trim(),
       siteId: process.env.NEXT_PUBLIC_SITE_URL as string,
       uid: session?.token.sid as string,
     };
     // createPetPage0({ ...form, parentId: process.env.NEXT_PUBLIC_SITE_URL as string })
     // console.log('form', {...form, parentId: query[3]})
-    createPetAdoption({...form, parentId: query[3]})
+    if (adoption) {
+      
+      updatePetAdoption({...form, id: adoption._id,  parentId: adoption.parentId})
+    } else {
+      
+      createPetAdoption({...form, parentId: query[3]})
+    }
   };
 
 
@@ -90,7 +113,7 @@ export function FormAdoption(props: Props) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
       <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
         <div className="flex items-start justify-between">
-          <Dialog.Title className="text-lg font-medium text-gray-900">New Adoption</Dialog.Title>
+          <Dialog.Title className="text-lg font-medium text-gray-900">{adoption ? 'Update Adoption': 'Create Adoption'}</Dialog.Title>
           <div className="ml-3 flex h-7 items-center">
             <button
               type="button"
@@ -115,12 +138,12 @@ export function FormAdoption(props: Props) {
                         type="text"
                         autoComplete="off"
                         className="input-form"
-                        {...register('name', {
+                        {...register('title', {
                           required: 'Title required!!',
                           minLength: { value: 2, message: 'min 2 characters' },
                         })}
                       />
-                      {errors.name && (
+                      {errors.title && (
                         <p className="text-red-600 text-sm">This is required!!</p>
                       )}
                     </div>
@@ -129,7 +152,7 @@ export function FormAdoption(props: Props) {
                       <label className="label-form">Description</label>
                       <div className="mt-1">
                         <textarea
-                          rows={6}
+                          rows={30}
                           className="input-form"
                           {...register('description', {
                             required: 'Title required!!',
